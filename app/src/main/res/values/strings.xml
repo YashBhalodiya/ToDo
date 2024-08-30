@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">ToDo</string>
     <string name="todofieldtxt">Enter ToDo</string>
-    <string name="addbtn">Add btn</string>
+    <string name="addbtn">Add</string>
 
     <string name="deletebtn">Delete btn</string>
-    <string name="todoex">Hello</string>
     <string name="fab">FAB</string>
 </resources>

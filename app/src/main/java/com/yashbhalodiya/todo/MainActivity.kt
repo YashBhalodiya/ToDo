@@ -1,12 +1,15 @@
 package com.yashbhalodiya.todo
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,25 +19,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
+        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         todoAdapter = ToDoAdapter(todoList)
         recyclerView.adapter = todoAdapter
 
-        val addBtn : ImageButton = findViewById(R.id.addbtn)
-        val todoField : EditText = findViewById(R.id.todofield)
+        val fabBtn : FloatingActionButton = findViewById(R.id.fabBtn)
 
-        addBtn.setOnClickListener {
-            val todoTxt = todoField.text.toString()
-            val todo = ToDoDataModel(todoTxt)
-            if (!todoField.text.isEmpty()) {
-                todoList.add(todo)
-                todoAdapter.notifyItemInserted(todoList.size - 1)
-                todoField.text.clear()
+        fabBtn.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.todo_container, AddToDoFragment())
+                addToBackStack(null)
             }
         }
+    }
+
+    fun addTodoItem(todoText: String) {
+        val todo = ToDoDataModel(todoText)
+        todoList.add(todo)
+        todoAdapter.notifyItemInserted(todoList.size - 1)
     }
 }
