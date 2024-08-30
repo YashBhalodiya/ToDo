@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -30,10 +30,11 @@ class MainActivity : AppCompatActivity() {
         addBtn.setOnClickListener {
             val todoTxt = todoField.text.toString()
             val todo = ToDoDataModel(todoTxt)
-            todoList.add(todo)
-            todoAdapter.notifyItemInserted(todoList.size - 1)
-            todoField.text.clear()
+            if (!todoField.text.isEmpty()) {
+                todoList.add(todo)
+                todoAdapter.notifyItemInserted(todoList.size - 1)
+                todoField.text.clear()
+            }
         }
-
     }
 }
